@@ -4,21 +4,16 @@ import android.util.Log;
 import edu.wpi.rail.jrosbridge.Ros;
 import edu.wpi.rail.jrosbridge.Topic;
 import edu.wpi.rail.jrosbridge.messages.Message;
-import lombok.Getter;
-import lombok.Setter;
 
 public class TwistPublisher {
     private static TwistPublisher instance = new TwistPublisher();
     private Ros ros;
     private Topic twistTopic;
-    @Getter
-    @Setter
+    
     private double vx;
-    @Getter
-    @Setter
+    
     private double vy;
-    @Getter
-    @Setter
+    
     private double angular;
     
     private TwistPublisher() {
