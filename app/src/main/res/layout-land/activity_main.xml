@@ -68,25 +68,26 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="32dp"
                 android:layout_marginStart="32dp"
-                android:id="@+id/joystickView3"
+                android:id="@+id/velocityCon"
                 />
 
         <SeekBar
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/seekBar"
+                android:id="@+id/angularCon"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="150dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="150dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="70dp"
-                app:layout_constraintStart_toEndOf="@+id/joystickView3"
+                app:layout_constraintStart_toEndOf="@+id/velocityCon"
                 android:layout_marginStart="222dp"
-                android:progress="50"
                 android:max="100"
                 style="@android:style/Widget.Material.Light.SeekBar"
-                android:visibility="visible"/>
+                android:visibility="visible"
+                android:progress="0"
+                android:min="-100"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

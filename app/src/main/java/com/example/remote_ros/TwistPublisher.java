@@ -1,23 +1,23 @@
 package com.example.remote_ros;
 
 import android.util.Log;
-import edu.wpi.rail.jrosbridge.Ros;
-import edu.wpi.rail.jrosbridge.Topic;
-import edu.wpi.rail.jrosbridge.messages.Message;
+import ros.Publisher;
+import ros.RosBridge;
+import ros.msgs.geometry_msgs.Twist;
+import ros.msgs.geometry_msgs.Vector3;
+
 
 public class TwistPublisher {
     private static TwistPublisher instance = new TwistPublisher();
-    private Ros ros;
-    private Topic twistTopic;
+    private RosBridge ros;
+    private Publisher twistPub;
     
     private double vx;
-    
     private double vy;
-    
     private double angular;
     
     private TwistPublisher() {
-        ros = new Ros();
+        ros = new RosBridge();
     }
     
     public static TwistPublisher getInstance() {
@@ -25,11 +25,12 @@ public class TwistPublisher {
     }
     
     public boolean init(String ip) {
-        ros = new Ros(ip);
+        ros = new RosBridge();
         Log.d("remoteros", "initialization of rosbridge");
-        if (ros.connect()) {
+        ros.connect(ip, true);
+        if (ros.hasConnected()) {
             Log.d("remoteros", "success");
-            twistTopic = new Topic(ros, "/order", "geometry_msgs/Twist");
+            twistPub = new Publisher("/order", "geometry_msgs/Twist", ros);
             return true;
         } else {
             Log.d("remoteros", "failure");
@@ -38,8 +39,36 @@ public class TwistPublisher {
     }
     
     public void update() {
-        Message msg = new Message("");
-        msg.setMessageType("geometry_msgs/Twist");
-        twistTopic.publish(msg);
+        Twist twist = new Twist(new Vector3(vx, vy, 0), new Vector3(0, 0, angular));
+        if (ros.hasConnected()) {
+            twistPub.publish(twist);
+        }
+        Log.d("remoteros", "x:" + twist.linear.x +
+                "y:" + twist.linear.y +
+                "az:" + twist.angular.z);
+    }
+    
+    public double getVx() {
+        return vx;
+    }
+    
+    public void setVx(double vx) {
+        this.vx = vx;
+    }
+    
+    public double getVy() {
+        return vy;
+    }
+    
+    public void setVy(double vy) {
+        this.vy = vy;
+    }
+    
+    public double getAngular() {
+        return angular;
+    }
+    
+    public void setAngular(double angular) {
+        this.angular = angular;
     }
 }
