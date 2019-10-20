@@ -1,7 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity"/>
+        tools:context=".MainActivity">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/inform"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="336dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="337dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="waiting to connect"/>
+
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/editText"
+            android:inputType="text"
+            android:hint="xxx.xxx.xxx.xxx"
+            app:layout_constraintTop_toBottomOf="@+id/inform"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="200dp"
+            app:layout_constraintEnd_toStartOf="@+id/button"/>
+
+    <Button
+            android:text="@string/connect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/button"
+            app:layout_constraintStart_toEndOf="@+id/editText"
+            android:layout_marginEnd="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/editText"/>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/editText"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+
+        <io.github.controlwear.virtual.joystick.android.JoystickView
+                xmlns:custom="http://schemas.android.com/apk/res-auto"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                custom:JV_buttonColor="#FF6E40"
+                custom:JV_buttonSizeRatio="15%"
+                custom:JV_borderColor="#00796B"
+                custom:JV_backgroundColor="#009688"
+                custom:JV_borderWidth="4dp"
+                custom:JV_fixedCenter="false"
+                custom:layout_constraintTop_toTopOf="parent"
+                custom:layout_constraintBottom_toBottomOf="parent"
+                custom:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginStart="32dp"
+                android:id="@+id/joystickView3"/>
+
+        <SeekBar
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/seekBar"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="150dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="150dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="70dp"
+                app:layout_constraintStart_toEndOf="@+id/joystickView3"
+                android:layout_marginStart="222dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

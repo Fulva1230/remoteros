@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">remote-ros</string>
+    <string name="connect">connect</string>
 </resources>
