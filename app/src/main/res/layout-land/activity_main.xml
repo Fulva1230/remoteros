@@ -23,13 +23,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:id="@+id/editText"
             android:inputType="text"
             android:hint="xxx.xxx.xxx.xxx"
             app:layout_constraintTop_toBottomOf="@+id/inform"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="200dp"
-            app:layout_constraintEnd_toStartOf="@+id/button"/>
+            app:layout_constraintEnd_toStartOf="@+id/button"
+            android:id="@+id/rosip"/>
 
     <Button
             android:text="@string/connect"
@@ -39,7 +39,8 @@
             app:layout_constraintStart_toEndOf="@+id/editText"
             android:layout_marginEnd="200dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editText"/>
+            app:layout_constraintTop_toTopOf="@+id/editText"
+            android:onClick="connect"/>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,10 +58,10 @@
                 xmlns:custom="http://schemas.android.com/apk/res-auto"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                custom:JV_buttonColor="#FF6E40"
+                custom:JV_buttonColor="@android:color/holo_red_dark"
                 custom:JV_buttonSizeRatio="15%"
-                custom:JV_borderColor="#00796B"
-                custom:JV_backgroundColor="#009688"
+                custom:JV_borderColor="?attr/colorButtonNormal"
+                custom:JV_backgroundColor="@android:color/holo_orange_light"
                 custom:JV_borderWidth="4dp"
                 custom:JV_fixedCenter="false"
                 custom:layout_constraintTop_toTopOf="parent"
@@ -69,7 +70,8 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginBottom="32dp"
                 android:layout_marginStart="32dp"
-                android:id="@+id/joystickView3"/>
+                android:id="@+id/joystickView3"
+                android:visibility="visible"/>
 
         <SeekBar
                 android:layout_width="250dp"
@@ -82,7 +84,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="70dp"
                 app:layout_constraintStart_toEndOf="@+id/joystickView3"
-                android:layout_marginStart="222dp"/>
+                android:layout_marginStart="222dp"
+                android:progress="50"
+                android:max="100"
+                style="@android:style/Widget.Material.Light.SeekBar"
+                android:visibility="visible"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
