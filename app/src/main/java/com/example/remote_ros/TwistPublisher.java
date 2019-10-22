@@ -1,5 +1,6 @@
 package com.example.remote_ros;
 
+import android.os.AsyncTask;
 import android.util.Log;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -56,7 +57,14 @@ public class TwistPublisher {
             objectMapper.writeValue(generator, twist);
             if (ros.isConnected()) {
                 Message message = new Message(writer.toString(), "geometry_msgs/Twist");
-                twistPub.publish(message);
+                AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+                        twistPub.publish(message);
+                        return null;
+                    }
+                };
+                asyncTask.execute();
             }
         } catch (IOException e) {
             e.printStackTrace();

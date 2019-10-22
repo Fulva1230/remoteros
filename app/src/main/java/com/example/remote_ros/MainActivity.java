@@ -1,5 +1,6 @@
 package com.example.remote_ros;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.SeekBar;
@@ -19,11 +20,25 @@ public class MainActivity extends AppCompatActivity {
     public void connect(View view) {
         final TextView ip = findViewById(R.id.rosip);
         final TextView inform = findViewById(R.id.inform);
-        if (TwistPublisher.getInstance().init(ip.getText().toString())) {
-            inform.setText("success");
-        } else {
-            inform.setText("failure");
-        }
+        AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+            
+                if (TwistPublisher.getInstance().init(ip.getText().toString())) {
+                    MainActivity.this.runOnUiThread(() -> {
+                        inform.setText("success");
+                    });
+                
+                } else {
+                    MainActivity.this.runOnUiThread(() -> {
+                        inform.setText("failure");
+                    });
+                }
+                return null;
+            }
+        };
+        asyncTask.execute();
+        
     }
     
     private void initPanel() {
