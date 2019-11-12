@@ -1,5 +1,7 @@
 package com.example.remote_ros;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -9,10 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 public class MainActivity extends AppCompatActivity {
+    private SharedPreferences mPrefs;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPrefs = getPreferences(Context.MODE_PRIVATE);
         setContentView(R.layout.activity_main);
         initPanel();
     }
@@ -41,7 +45,16 @@ public class MainActivity extends AppCompatActivity {
         
     }
     
+    public void save(View view) {
+        SharedPreferences.Editor ed = mPrefs.edit();
+        final TextView ip = findViewById(R.id.rosip);
+        ed.putString("ip", ip.getText().toString());
+        ed.apply();
+    }
+    
     private void initPanel() {
+        final TextView ip = findViewById(R.id.rosip);
+        ip.setText(mPrefs.getString("ip", ""));
         final JoystickView joystick = findViewById(R.id.velocityCon);
         joystick.setOnMoveListener((int angle, int strength) -> {
             final TwistPublisher twistPub = TwistPublisher.getInstance();

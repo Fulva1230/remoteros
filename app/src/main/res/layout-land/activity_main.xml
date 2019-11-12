@@ -91,4 +91,13 @@
                 android:min="-100"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <Button
+            android:text="save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/save"
+            android:onClick="save"
+            app:layout_constraintStart_toEndOf="@+id/button"
+            app:layout_constraintTop_toTopOf="@+id/button"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
