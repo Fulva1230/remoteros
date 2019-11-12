@@ -23,12 +23,12 @@ public class MainActivity extends AppCompatActivity {
         AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-            
+    
                 if (TwistPublisher.getInstance().init(ip.getText().toString())) {
                     MainActivity.this.runOnUiThread(() -> {
                         inform.setText("success");
                     });
-                
+        
                 } else {
                     MainActivity.this.runOnUiThread(() -> {
                         inform.setText("failure");
@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
         final JoystickView joystick = findViewById(R.id.velocityCon);
         joystick.setOnMoveListener((int angle, int strength) -> {
             final TwistPublisher twistPub = TwistPublisher.getInstance();
-            twistPub.setVx(Math.cos(Math.toRadians(angle)) * strength);
-            twistPub.setVy(Math.sin(Math.toRadians(angle)) * strength);
+            twistPub.setVx(Math.cos(Math.toRadians(angle)) * strength * 5);
+            twistPub.setVy(Math.sin(Math.toRadians(angle)) * strength * 5);
             twistPub.update();
         }, 100);
         final SeekBar seekBar = findViewById(R.id.angularCon);
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 final TwistPublisher twistPub = TwistPublisher.getInstance();
-                twistPub.setAngular(progress);
+                twistPub.setAngular(2 * Math.PI * progress / 60);
                 twistPub.update();
             }
             

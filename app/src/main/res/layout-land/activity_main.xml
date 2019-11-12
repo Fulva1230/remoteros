@@ -29,7 +29,8 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="200dp"
             app:layout_constraintEnd_toStartOf="@+id/button"
-            android:id="@+id/rosip"/>
+            android:id="@+id/rosip"
+            android:saveEnabled="true"/>
 
     <Button
             android:text="@string/connect"
