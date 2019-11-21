@@ -27,14 +27,13 @@ public class MainActivity extends AppCompatActivity {
         AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-    
-                if (TwistPublisher.getInstance().init(ip.getText().toString())) {
-                    MainActivity.this.runOnUiThread(() -> {
+                if (RosHandlerFactory.getInstance().init(ip.getText().toString())) {
+                    runOnUiThread(() -> {
                         inform.setText("success");
                     });
-        
+                    TwistPublisher.getInstance().init();
                 } else {
-                    MainActivity.this.runOnUiThread(() -> {
+                    runOnUiThread(() -> {
                         inform.setText("failure");
                     });
                 }

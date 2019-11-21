@@ -1,11 +1,9 @@
 package com.example.remote_ros;
 
-import android.os.AsyncTask;
 import android.util.Log;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.wpi.rail.jrosbridge.Ros;
 import edu.wpi.rail.jrosbridge.Topic;
 import edu.wpi.rail.jrosbridge.messages.Message;
 import ros.msgs.geometry_msgs.Twist;
@@ -17,33 +15,24 @@ import java.io.StringWriter;
 
 public class TwistPublisher {
     private static TwistPublisher instance = new TwistPublisher();
-    private Ros ros;
     private Topic twistPub;
+    private RosComutor rosComutor;
     
     private double vx;
     private double vy;
     private double angular;
     
     private TwistPublisher() {
-        ros = new Ros();
     }
     
     public static TwistPublisher getInstance() {
         return instance;
     }
     
-    public boolean init(String ip) {
-        ros = new Ros(ip);
-        Log.d("remoteros", "initialization of rosbridge");
-    
-        if (ros.connect()) {
-            Log.d("remoteros", "success");
+    public void init() {
+        RosHandlerFactory.getInstance().getRosComutor().run((ros) -> {
             twistPub = new Topic(ros, "/order", "geometry_msgs/Twist");
-            return true;
-        } else {
-            Log.d("remoteros", "failure");
-            return false;
-        }
+        });
     }
     
     public void update() {
@@ -55,17 +44,10 @@ public class TwistPublisher {
             generator = jsonFactory.createGenerator(writer);
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.writeValue(generator, twist);
-            if (ros.isConnected()) {
-                Message message = new Message(writer.toString(), "geometry_msgs/Twist");
-                AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
-                    @Override
-                    protected Void doInBackground(Void... voids) {
-                        twistPub.publish(message);
-                        return null;
-                    }
-                };
-                asyncTask.execute();
-            }
+            Message message = new Message(writer.toString(), "geometry_msgs/Twist");
+            rosComutor.run((ros) -> {
+                twistPub.publish(message);
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
