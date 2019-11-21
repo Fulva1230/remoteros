@@ -84,11 +84,21 @@
                 android:layout_marginEnd="70dp"
                 app:layout_constraintStart_toEndOf="@+id/velocityCon"
                 android:layout_marginStart="222dp"
-                android:max="100"
+                android:max="10"
                 style="@android:style/Widget.Material.Light.SeekBar"
                 android:visibility="visible"
                 android:progress="0"
-                android:min="-100"/>
+                android:min="-10"/>
+
+        <TextView
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/angularview"
+                app:layout_constraintStart_toStartOf="@+id/angularCon"
+                app:layout_constraintEnd_toEndOf="@+id/angularCon"
+                android:layout_marginBottom="2dp"
+                app:layout_constraintBottom_toTopOf="@+id/angularCon"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button

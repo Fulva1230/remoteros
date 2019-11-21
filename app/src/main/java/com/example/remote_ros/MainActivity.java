@@ -69,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
                 final TwistPublisher twistPub = TwistPublisher.getInstance();
                 twistPub.setAngular(2 * Math.PI * progress / 60);
                 twistPub.update();
+                runOnUiThread(() -> {
+                    TextView displayView = findViewById(R.id.angularview);
+                    displayView.setText(String.valueOf(progress));
+                });
             }
             
             @Override
