@@ -15,7 +15,10 @@ public class RosHandlerFactory {
     }
     
     public RosComutor getRosComutor() {
-        return new ConRosComutor(ros);
+        if (ros != null && ros.isConnected()) {
+            return new ConRosComutor(ros);
+        }
+        return new NullRosComutor();
     }
     
     public boolean init(String ip) {
@@ -57,6 +60,12 @@ public class RosHandlerFactory {
                 consumer.accept(ros);
             }
             return null;
+        }
+    }
+    
+    private static class NullRosComutor implements RosComutor {
+        @Override
+        public void run(Consumer<Ros> consumer) {
         }
     }
 }

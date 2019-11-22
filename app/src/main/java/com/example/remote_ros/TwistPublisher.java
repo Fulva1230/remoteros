@@ -30,7 +30,8 @@ public class TwistPublisher {
     }
     
     public void init() {
-        RosHandlerFactory.getInstance().getRosComutor().run((ros) -> {
+        rosComutor = RosHandlerFactory.getInstance().getRosComutor();
+        rosComutor.run((ros) -> {
             twistPub = new Topic(ros, "/order", "geometry_msgs/Twist");
         });
     }
