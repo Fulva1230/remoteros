@@ -3,13 +3,10 @@ package com.example.remote_ros;
 import android.util.Log;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.wpi.rail.jrosbridge.Topic;
-import edu.wpi.rail.jrosbridge.messages.Message;
-import ros.msgs.geometry_msgs.Twist;
-import ros.msgs.geometry_msgs.Vector3;
+import edu.wpi.rail.jrosbridge.messages.geometry.Twist;
+import edu.wpi.rail.jrosbridge.messages.geometry.Vector3;
 
-import java.io.IOException;
 import java.io.StringWriter;
 
 
@@ -41,21 +38,21 @@ public class TwistPublisher {
         JsonFactory jsonFactory = new JsonFactory();
         StringWriter writer = new StringWriter();
         JsonGenerator generator;
-        try {
-            generator = jsonFactory.createGenerator(writer);
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.writeValue(generator, twist);
-            Message message = new Message(writer.toString(), "geometry_msgs/Twist");
-            rosComutor.run((ros) -> {
-                twistPub.publish(message);
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-        Log.d("remoteros", "x:" + twist.linear.x +
-                "y:" + twist.linear.y +
-                "az:" + twist.angular.z);
+        // try {
+        // generator = jsonFactory.createGenerator(writer);
+        // ObjectMapper objectMapper = new ObjectMapper();
+        // objectMapper.writeValue(generator, twist);
+        // Message message = new Message(writer.toString(), "geometry_msgs/Twist");
+        rosComutor.run((ros) -> {
+            twistPub.publish(twist);
+        });
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
+    
+        Log.d("remoteros", "x:" + twist.getLinear().getX() +
+                "y:" + twist.getLinear().getY() +
+                "az:" + twist.getAngular().getZ());
     }
     
     public double getVx() {
