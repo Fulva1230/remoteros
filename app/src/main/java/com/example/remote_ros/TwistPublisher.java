@@ -1,13 +1,9 @@
 package com.example.remote_ros;
 
 import android.util.Log;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
 import edu.wpi.rail.jrosbridge.Topic;
 import edu.wpi.rail.jrosbridge.messages.geometry.Twist;
 import edu.wpi.rail.jrosbridge.messages.geometry.Vector3;
-
-import java.io.StringWriter;
 
 
 public class TwistPublisher {
@@ -35,9 +31,9 @@ public class TwistPublisher {
     
     public void update() {
         Twist twist = new Twist(new Vector3(vx, vy, 0), new Vector3(0, 0, angular));
-        JsonFactory jsonFactory = new JsonFactory();
-        StringWriter writer = new StringWriter();
-        JsonGenerator generator;
+        // JsonFactory jsonFactory = new JsonFactory();
+        // StringWriter writer = new StringWriter();
+        // JsonGenerator generator;
         // try {
         // generator = jsonFactory.createGenerator(writer);
         // ObjectMapper objectMapper = new ObjectMapper();
