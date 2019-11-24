@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import edu.wpi.rail.jrosbridge.callback.TopicCallback;
+import edu.wpi.rail.jrosbridge.messages.std.Header;
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +23,30 @@ public class MainActivity extends AppCompatActivity {
         initPanel();
     }
     
+    /**
+     * run this method after ros connected
+     */
+    private void initTheLog() {
+        TopicCallback topicCallback = (message) -> {
+            if (message instanceof Header) {
+                Header header = (Header) message;
+                StringBuilder builder = new StringBuilder();
+                builder.append("time:");
+                builder.append(header.getStamp().secs);
+                builder.append('\n');
+                builder.append(header.getFrameID());
+                builder.append('\n');
+                runOnUiThread(() -> {
+                    final TextView textView = findViewById(R.id.log);
+                    textView.append(builder.toString());
+                });
+            }
+        };
+        RosHandlerFactory.getInstance().getRosComutor().run((ros) -> {
+            ros.registerTopicCallback("mcudebug", topicCallback);
+        });
+    }
+    
     public void connect(View view) {
         final TextView ip = findViewById(R.id.rosip);
         final TextView inform = findViewById(R.id.inform);
@@ -32,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                         inform.setText("success");
                     });
                     TwistPublisher.getInstance().init();
+                    initTheLog();
                 } else {
                     runOnUiThread(() -> {
                         inform.setText("failure");

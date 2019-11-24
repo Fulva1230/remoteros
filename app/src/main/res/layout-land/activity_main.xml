@@ -136,18 +136,17 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="32dp"/>
 
-        <EditText
+        <TextView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:inputType="textMultiLine"
-                android:ems="10"
                 android:id="@+id/log"
                 app:layout_constraintStart_toEndOf="@+id/velocityCon"
                 app:layout_constraintEnd_toStartOf="@+id/angularCon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="32dp"
                 android:layout_marginTop="32dp"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:editable="true"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
