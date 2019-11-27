@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import edu.wpi.rail.jrosbridge.Topic;
 import edu.wpi.rail.jrosbridge.callback.TopicCallback;
 import edu.wpi.rail.jrosbridge.messages.std.Header;
 import io.github.controlwear.virtual.joystick.android.JoystickView;
 
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences mPrefs;
+    private Topic mcudebug_topic;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         RosHandlerFactory.getInstance().getRosComutor().run((ros) -> {
+            mcudebug_topic = new Topic(ros, "mcudebug", "std_msgs/Header");
+            mcudebug_topic.subscribe(topicCallback);
             ros.registerTopicCallback("mcudebug", topicCallback);
         });
     }
@@ -84,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
         final JoystickView joystick = findViewById(R.id.velocityCon);
         joystick.setOnMoveListener((int angle, int strength) -> {
             final TwistPublisher twistPub = TwistPublisher.getInstance();
-            twistPub.setVx(Math.cos(Math.toRadians(angle)) * strength * 5);
-            twistPub.setVy(Math.sin(Math.toRadians(angle)) * strength * 5);
+            twistPub.setVx(Math.cos(Math.toRadians(angle)) * strength * 2);
+            twistPub.setVy(Math.sin(Math.toRadians(angle)) * strength * 2);
             twistPub.update();
         }, 100);
         final SeekBar seekBar = findViewById(R.id.angularCon);
